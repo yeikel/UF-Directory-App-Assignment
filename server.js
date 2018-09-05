@@ -1,26 +1,19 @@
-var http = require('http'), 
-    fs = require('fs'), 
-    url = require('url'),
-    port = 8080;
+const http = require('http');
+const port = 8080;
+const listings = require("./listings.json");
 
-/* Global variables */
-var listingData, server;
+http.createServer((req, res) => {
 
-var requestHandler = function(request, response) {
-var parsedUrl = url.parse(request.url);
+    if (req.url === "/listings") {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(listings));
+        return;
+    }else{
+        res.writeHead(404, {'Content-Type': 'application/text'});
+        res.end("Bad gateway error");
+    }
+    res.end();
 
-  /*
-    Your request handler should send listingData in the JSON format if a GET request 
-    is sent to the '/listings' path. Otherwise, it should send a 404 error. 
+}).listen(port, '127.0.0.1');
 
-    HINT: explore the request object and its properties 
-    http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
-   */
-};
-
-fs.readFile('listings.json', 'utf8', function(err, data) {
-  /*
-    This callback function should save the data in the listingData variable, 
-    then start the server. 
-   */
-});
+console.log('Server listening on: http://127.0.0.1:' + port);

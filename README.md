@@ -35,7 +35,7 @@ server.listen(port, function() {
 });
 console.log('Is the server started?');
 ```
-Which log statement do you expect to be printed first? Answer this, then type the command `node simpleServer.js` and see if the results match up with what you were thinking. `Is the server started?` gets printed first is because the call to `server.listen()` is asynchronous in nature. While server.listen() is not finished, the control flow gets passed to the next line of the program. Once server.listen() is finished, it executes the *callback*, defined by the anonymous function: 
+Which log statement do you expect to be printed first? Answer this, then type the command `node server.js` and see if the results match up with what you were thinking. `Is the server started?` gets printed first is because the call to `server.listen()` is asynchronous in nature. While server.listen() is not finished, the control flow gets passed to the next line of the program. Once server.listen() is finished, it executes the *callback*, defined by the anonymous function: 
 ```javascript
 function() {
     console.log('Server listening on: http://127.0.0.1:' + port);
