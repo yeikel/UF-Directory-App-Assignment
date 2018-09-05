@@ -1,16 +1,19 @@
-var http = require('http');
-var port = 8080; 
+const http = require('http');
+const port = 8080;
+const listings = require("./listings.json");
 
-var requestHandler = function(request, response) {
-  response.end('Request received!');
-};
+http.createServer((req, res) => {
 
-// a server is created, but not started
-var server = http.createServer(requestHandler);
+    if (req.url === "/listings") {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(listings));
+        return;
+    }else{
+        res.writeHead(404, {'Content-Type': 'application/text'});
+        res.end("Bad gateway error");
+    }
+    res.end();
 
-// the server is now started, listening for requests on port 8080
-server.listen(port, function() {
-  //once the server is listening, this callback function is executed
-  console.log('Server listening on: http://127.0.0.1:' + port);
-});
-console.log('Is the server started?');
+}).listen(port, '127.0.0.1');
+
+console.log('Server listening on: http://127.0.0.1:' + port);
